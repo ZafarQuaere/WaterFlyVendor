@@ -1,0 +1,22 @@
+//http://econnecto.com/Waterfly/api/vendors/login.php
+
+Failure Response:
+
+{
+    "message": [
+        "Invalid {phone}. Enter 10 digit phone number"
+    ],
+    "status": 0,
+    "data": []
+}
+
+
+Success Response:
+
+{
+    "message": [
+        "OTP sent successfully. Check your inbox"
+    ],
+    "status": 1,
+    "data": []
+}

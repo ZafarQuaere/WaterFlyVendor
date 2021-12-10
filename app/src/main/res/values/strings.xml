@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name">Water Fly Vendor</string>
+    <string name="no_internet_connection">No internet connection</string>
+    <string name="network_failure">Network Failure</string>
+    <string name="conversion_error">Conversion Error</string>
+    <string name="water_fly">Water Fly</string>
+    <string name="please_enter_your_mobile_number">Please Enter your mobile number</string>
+    <string name="mobile_no">Mobile No</string>
+    <string name="next">Next</string>
+    <string name="enter_valid_mobile_no">Enter valid mobile no</string>
+    <string name="key_mobile">key_mobile</string>
+    <string name="please_enter_otp">Please enter OTP sent to your mobile No</string>
+    <string name="validate">Validate OTP</string>
+    <string name="send_otp">Send OTP</string>
+    <string name="enter_correct_otp">Please enter correct OTP</string>
+    <string name="please_enter_details">Please Enter Details</string>
+    <string name="vendor_name">Vendor Name</string>
+    <string name="plant_name">Plant Name</string>
+    <string name="plant_phone">Plant Phone</string>
+    <string name="plant_address">Plant Address</string>
+    <string name="add_details">Add Details</string>
+    <string name="enter_valid_vendor_name">Enter valid vendor name</string>
+    <string name="enter_valid_plant_name">Enter valid plant name</string>
+    <string name="enter_valid_address">Enter valid address</string>
+</resources>
