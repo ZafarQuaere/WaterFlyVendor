@@ -2,7 +2,6 @@ package com.waterfly.vendor.network
 
 
 import com.waterfly.vendor.util.Constants.BASE_URL
-import com.waterfly.vendor.util.Constants.BASE_URL_2
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -24,14 +23,28 @@ class RetrofitInstance {
                 .build()
         }
 
-        private val retrofitPicsum by lazy {
+        private val updateVendorRequest by lazy {
             val logging = HttpLoggingInterceptor()
             logging.setLevel(HttpLoggingInterceptor.Level.BODY)
             val client = OkHttpClient.Builder()
                 .addInterceptor(logging)
                 .build()
             Retrofit.Builder()
-                .baseUrl(BASE_URL_2)
+                .baseUrl(BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(client)
+                .build()
+        }
+
+
+        private val updateVendorStatusRequest by lazy {
+            val logging = HttpLoggingInterceptor()
+            logging.setLevel(HttpLoggingInterceptor.Level.BODY)
+            val client = OkHttpClient.Builder()
+                .addInterceptor(logging)
+                .build()
+            Retrofit.Builder()
+                .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(client)
                 .build()
@@ -42,8 +55,12 @@ class RetrofitInstance {
             retrofitLogin.create(API::class.java)
         }
 
-        val picsumApi by lazy {
-            retrofitPicsum.create(API::class.java)
+        val updateVendorApi by lazy {
+            updateVendorRequest.create(API::class.java)
+        }
+
+        val updateVendorStatus by lazy {
+            updateVendorStatusRequest.create(API::class.java)
         }
     }
 }

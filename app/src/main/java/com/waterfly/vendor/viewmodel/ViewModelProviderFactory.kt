@@ -16,6 +16,9 @@ class ViewModelProviderFactory(val app: Application, val appRepository: AppRepos
         if (modelClass.isAssignableFrom(VendorDetailsViewModel::class.java)) {
             return VendorDetailsViewModel(app, appRepository) as T
         }
+        if (modelClass.isAssignableFrom(HomeViewModel::class.java)){
+            return HomeViewModel(app,appRepository) as T
+        }
         throw IllegalArgumentException("Unknown Class Name")
     }
 }

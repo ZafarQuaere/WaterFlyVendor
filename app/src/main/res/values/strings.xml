@@ -22,4 +22,6 @@
     <string name="enter_valid_vendor_name">Enter valid vendor name</string>
     <string name="enter_valid_plant_name">Enter valid plant name</string>
     <string name="enter_valid_address">Enter valid address</string>
+    <string name="online">Online</string>
+    <string name="offline">Offline</string>
 </resources>

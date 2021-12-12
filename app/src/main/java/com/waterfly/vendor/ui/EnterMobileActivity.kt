@@ -12,18 +12,23 @@ import com.waterfly.vendor.R
 import com.waterfly.vendor.model.ValidateOTPResponse
 import com.waterfly.vendor.network.RequestBodies
 import com.waterfly.vendor.repository.AppRepository
+import com.waterfly.vendor.util.DataStoreManager
 import com.waterfly.vendor.util.Resource
 import com.waterfly.vendor.util.errorSnack
 import com.waterfly.vendor.util.hideKeyboard
 import com.waterfly.vendor.viewmodel.LoginViewModel
 import com.waterfly.vendor.viewmodel.ViewModelProviderFactory
 import kotlinx.android.synthetic.main.activity_enter_mobile.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 
 class EnterMobileActivity : AppCompatActivity() {
 
     lateinit var loginViewModel: LoginViewModel
     lateinit var mobileNo : String
+    lateinit var dataStoreManager: DataStoreManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,6 +40,7 @@ class EnterMobileActivity : AppCompatActivity() {
         val repository = AppRepository()
         val factory = ViewModelProviderFactory(application, repository)
         loginViewModel = ViewModelProvider(this, factory).get(LoginViewModel::class.java)
+        dataStoreManager = DataStoreManager(this@EnterMobileActivity)
     }
 
     fun onSendOTPClick(view: View) {
@@ -110,7 +116,8 @@ class EnterMobileActivity : AppCompatActivity() {
 
     private fun navigateToHome(data: ValidateOTPResponse) {
         if (data.data?.get(0)?.details_completed == "1"){
-            // TODO Move to Home Screen
+            //TODO Move to home screen
+
         } else {
             val intent = Intent(this@EnterMobileActivity, VendorDetailsActivity::class.java)
             intent.putExtra(getString(R.string.key_mobile), mobileNo)
