@@ -7,17 +7,16 @@ import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import com.waterfly.vendor.model.ValidateUserData
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
 
 const val VENDOR_DATASTORE = "datastore"
+private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = VENDOR_DATASTORE)
 
 class DataStoreManager(val context: Context) {
 
-    private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = VENDOR_DATASTORE)
-
     companion object {
-
         val JWT_TOKEN = stringPreferencesKey("JWT_TOKEN")
         val VENDOR_ID = stringPreferencesKey("VENDOR_ID")
         val phone = stringPreferencesKey("phone")
@@ -39,7 +38,6 @@ class DataStoreManager(val context: Context) {
             it[plant_phone] = data.plant_phone
             it[plant_address] = data.plant_address
             it[details_completed] = data.details_completed
-
         }
     }
 
@@ -56,13 +54,26 @@ class DataStoreManager(val context: Context) {
         )
     }
 
-    suspend fun storeVendorId( id: String){
+    suspend fun storeVendorId(id: String) {
         context.dataStore.edit {
             it[VENDOR_ID] = id
         }
     }
 
-   /* suspend fun getVendorId(): String = context.dataStore.data.toString(){
-        it[VENDOR_ID]
-    }*/
+    suspend fun storeToken(token: String) {
+        context.dataStore.edit {
+            it[JWT_TOKEN] = token
+        }
+    }
+
+    val getToken: Flow<String?>
+        get() =
+            context.dataStore.data.map { preferences ->
+                preferences[JWT_TOKEN]
+            }
+
+    val getVendorId: Flow<String?>
+        get() = context.dataStore.data.map { preferences ->
+            preferences[VENDOR_ID]
+        }
 }

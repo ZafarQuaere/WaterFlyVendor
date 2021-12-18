@@ -7,20 +7,20 @@ import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import com.google.android.material.snackbar.Snackbar
 import com.waterfly.vendor.R
 import com.waterfly.vendor.model.ValidateOTPResponse
+import com.waterfly.vendor.model.ValidateUserData
 import com.waterfly.vendor.network.RequestBodies
 import com.waterfly.vendor.repository.AppRepository
-import com.waterfly.vendor.util.DataStoreManager
-import com.waterfly.vendor.util.Resource
-import com.waterfly.vendor.util.errorSnack
-import com.waterfly.vendor.util.hideKeyboard
+import com.waterfly.vendor.util.*
 import com.waterfly.vendor.viewmodel.LoginViewModel
 import com.waterfly.vendor.viewmodel.ViewModelProviderFactory
 import kotlinx.android.synthetic.main.activity_enter_mobile.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 
 
@@ -54,7 +54,14 @@ class EnterMobileActivity : AppCompatActivity() {
                         is Resource.Success -> {
                             hideProgressBar()
                             response.data?.let {
-                                updateUIForValidateOTP()
+                                if (response.data.status == 1) {
+                                    updateUIForValidateOTP()
+                                } else {
+                                    response.message?.get(0)
+                                        ?.let { message ->
+                                            progress.errorSnack(message.toString(), Snackbar.LENGTH_LONG)
+                                        }
+                                }
                             }
                         }
                         is Resource.Error -> {
@@ -115,14 +122,26 @@ class EnterMobileActivity : AppCompatActivity() {
     }
 
     private fun navigateToHome(data: ValidateOTPResponse) {
-        if (data.data?.get(0)?.details_completed == "1"){
-            //TODO Move to home screen
-
+        if (data.data?.isNotEmpty() == true && data.status == 1) {
+            val vendorData: ValidateUserData? = data.data[0]
+            if (vendorData?.details_completed == "1") {
+                lifecycleScope.launch {
+                    storeDataAndNavigateToHome(vendorData)
+                }
+            } else {
+                val intent = Intent(this@EnterMobileActivity, VendorDetailsActivity::class.java)
+                intent.putExtra(getString(R.string.key_mobile), mobileNo)
+                startActivity(intent)
+            }
         } else {
-            val intent = Intent(this@EnterMobileActivity, VendorDetailsActivity::class.java)
-            intent.putExtra(getString(R.string.key_mobile), mobileNo)
-            startActivity(intent)
+            data.message?.get(0)?.let { progress.errorSnack(it) }
         }
+    }
+
+    private suspend fun storeDataAndNavigateToHome(vendorData: ValidateUserData) {
+        dataStoreManager.storeToken(vendorData.JWT_Token)
+        dataStoreManager.storeVendorId(vendorData.id)
+        startActivity(Intent(this@EnterMobileActivity,HomeActivity::class.java))
     }
 
     private fun hideProgressBar() {

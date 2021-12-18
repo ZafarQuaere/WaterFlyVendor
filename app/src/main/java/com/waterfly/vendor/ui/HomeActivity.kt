@@ -5,10 +5,13 @@ import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.asLiveData
 import com.google.android.material.snackbar.Snackbar
 import com.waterfly.vendor.R
 import com.waterfly.vendor.network.RequestBodies
 import com.waterfly.vendor.repository.AppRepository
+import com.waterfly.vendor.util.DataStoreManager
+import com.waterfly.vendor.util.LogUtils
 import com.waterfly.vendor.util.Resource
 import com.waterfly.vendor.util.errorSnack
 import com.waterfly.vendor.viewmodel.HomeViewModel
@@ -21,12 +24,29 @@ import kotlinx.android.synthetic.main.activity_home.*
 //TODO 5 update UI on the basis of offline/online feature
 
 class HomeActivity : AppCompatActivity() {
+
     lateinit var homeViewModel: HomeViewModel
+    lateinit var dataStoreManager: DataStoreManager
+    private var token:String? = null
+    private var vendorId:String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
+        dataStoreManager = DataStoreManager(this)
+        observeData()
         initUI()
+    }
+
+    private fun observeData() {
+        dataStoreManager.getToken.asLiveData().observe(this, Observer {
+            token = it
+            token?.let { token -> LogUtils.DEBUG(token) }
+        })
+        dataStoreManager.getVendorId.asLiveData().observe(this, Observer {
+            vendorId = it
+            vendorId?.let { vendorId ->LogUtils.DEBUG(vendorId) }
+        })
     }
 
     private fun initUI() {
@@ -44,7 +64,8 @@ class HomeActivity : AppCompatActivity() {
 
     private fun vendorLiveStatus(isOnline: Boolean) {
         val action = if (isOnline) "set_online" else "set_offline"
-        val body = RequestBodies.VendorStatusBody(action = action)
+
+        val body = RequestBodies.VendorStatusBody(token,action,vendorId,"","")
         homeViewModel.setVendorLiveStatus(body)
 
         homeViewModel.vendorLiveStatusResponse.observe(this, Observer { event ->
