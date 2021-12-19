@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.snackbar.Snackbar
 import com.waterfly.vendor.R
@@ -32,15 +33,24 @@ class EnterMobileActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_enter_mobile)
-        init()
+        dataStoreManager = DataStoreManager(this@EnterMobileActivity)
+        dataStoreManager.isUserLogin.asLiveData().observe(this, Observer {
+            if (it){
+                val intent = Intent(this@EnterMobileActivity, HomeActivity::class.java)
+                startActivity(intent)
+            } else {
+                setContentView(R.layout.activity_enter_mobile)
+                init()
+            }
+        })
+
     }
 
     private fun init() {
         val repository = AppRepository()
         val factory = ViewModelProviderFactory(application, repository)
         loginViewModel = ViewModelProvider(this, factory).get(LoginViewModel::class.java)
-        dataStoreManager = DataStoreManager(this@EnterMobileActivity)
+
     }
 
     fun onSendOTPClick(view: View) {
@@ -141,6 +151,7 @@ class EnterMobileActivity : AppCompatActivity() {
     private suspend fun storeDataAndNavigateToHome(vendorData: ValidateUserData) {
         dataStoreManager.storeToken(vendorData.JWT_Token)
         dataStoreManager.storeVendorId(vendorData.id)
+        dataStoreManager.setUserLogin(true)
         startActivity(Intent(this@EnterMobileActivity,HomeActivity::class.java))
     }
 

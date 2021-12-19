@@ -3,6 +3,7 @@ package com.waterfly.vendor.util
 import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
@@ -25,6 +26,7 @@ class DataStoreManager(val context: Context) {
         val plant_phone = stringPreferencesKey("plant_phone")
         val plant_address = stringPreferencesKey("plant_address")
         val details_completed = stringPreferencesKey("details_completed")
+        val isLogin = booleanPreferencesKey("isLogin")
     }
 
 
@@ -65,6 +67,17 @@ class DataStoreManager(val context: Context) {
             it[JWT_TOKEN] = token
         }
     }
+
+    suspend fun setUserLogin( login: Boolean){
+        context.dataStore.edit {
+            it[isLogin] = login
+        }
+    }
+
+    val isUserLogin:Flow<Boolean>
+        get() = context.dataStore.data.map { preferences ->
+            preferences[isLogin] == true
+        }
 
     val getToken: Flow<String?>
         get() =
