@@ -17,14 +17,14 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication"
         android:usesCleartextTraffic="true">
-        <activity
+       <!-- <activity
             android:name=".ui.HomeActivity"
-            android:exported="false" />
+            android:exported="false" />-->
         <activity
             android:name=".ui.VendorDetailsActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.EnterMobileActivity"
+            android:name=".ui.HomeActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

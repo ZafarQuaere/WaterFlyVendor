@@ -7,14 +7,22 @@
     android:orientation="vertical"
     tools:context=".ui.HomeActivity">
 
+  <FrameLayout
+      android:layout_width="match_parent"
+      android:background="@drawable/online_home_bg"
+      android:layout_above="@+id/lytBottom"
+      android:layout_height="wrap_content"/>
+
     <ProgressBar
         android:id="@+id/progress"
         android:layout_marginTop="@dimen/_8sdp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
         android:visibility="gone"/>
 
     <LinearLayout
+        android:id="@+id/lytBottom"
         android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

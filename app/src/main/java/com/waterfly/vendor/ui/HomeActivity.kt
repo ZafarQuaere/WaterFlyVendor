@@ -65,7 +65,7 @@ class HomeActivity : AppCompatActivity() {
     private fun vendorLiveStatus(isOnline: Boolean) {
         val action = if (isOnline) "set_online" else "set_offline"
 
-        val body = RequestBodies.VendorStatusBody(token,action,vendorId,"","")
+        val body = RequestBodies.VendorStatusBody(token,action,vendorId,"37.5561","-122.069021666666")
         homeViewModel.setVendorLiveStatus(body)
 
         homeViewModel.vendorLiveStatusResponse.observe(this, Observer { event ->
