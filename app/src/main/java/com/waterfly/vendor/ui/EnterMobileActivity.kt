@@ -139,13 +139,21 @@ class EnterMobileActivity : AppCompatActivity() {
                     storeDataAndNavigateToHome(vendorData)
                 }
             } else {
-                val intent = Intent(this@EnterMobileActivity, VendorDetailsActivity::class.java)
-                intent.putExtra(getString(R.string.key_mobile), mobileNo)
-                startActivity(intent)
+                lifecycleScope.launch{
+                    if (vendorData != null) {
+                        navigateToDetailsScreen(vendorData)
+                    }
+                }
             }
         } else {
             data.message?.get(0)?.let { progress.errorSnack(it) }
         }
+    }
+
+    private suspend fun navigateToDetailsScreen(vendorData: ValidateUserData) {
+        dataStoreManager.storeToken(vendorData.JWT_Token)
+        dataStoreManager.storeVendorId(vendorData.id)
+        startActivity(Intent(this@EnterMobileActivity,VendorDetailsActivity::class.java))
     }
 
     private suspend fun storeDataAndNavigateToHome(vendorData: ValidateUserData) {
