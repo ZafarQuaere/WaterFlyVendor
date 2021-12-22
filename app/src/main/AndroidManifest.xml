@@ -4,9 +4,9 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
 
     <application
         android:name=".app.MyApplication"
@@ -17,14 +17,18 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication"
         android:usesCleartextTraffic="true">
-        <activity
+        <!--<activity
+            android:name=".bgtask.BGDemo"
+            android:exported="false" />
+        --><activity
             android:name=".ui.HomeActivity"
             android:exported="false" />
         <activity
             android:name=".ui.VendorDetailsActivity"
             android:exported="false" />
+       <!-- android:name=".ui.EnterMobileActivity"-->
         <activity
-            android:name=".ui.EnterMobileActivity"
+            android:name=".bgtask.BGDemo"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
