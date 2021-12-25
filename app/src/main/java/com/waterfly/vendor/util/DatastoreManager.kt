@@ -43,7 +43,7 @@ class DataStoreManager(val context: Context) {
         }
     }
 
-    suspend fun getVendorData() = context.dataStore.data.map {
+     fun getVendorData() = context.dataStore.data.map {
         ValidateUserData(
             JWT_Token = it[JWT_TOKEN] ?: "",
             id = it[VENDOR_ID] ?: "",

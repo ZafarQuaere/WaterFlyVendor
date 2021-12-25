@@ -109,6 +109,7 @@ class VendorDetailsActivity : AppCompatActivity() {
                dataStoreManager.setUserLogin(true)
            }
            startActivity(Intent(this,HomeActivity::class.java))
+           finish()
        } else {
            data.message?.get(0)?.let { progress.errorSnack(it.toString(), Snackbar.LENGTH_LONG) }
        }

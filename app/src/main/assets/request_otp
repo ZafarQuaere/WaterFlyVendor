@@ -20,3 +20,26 @@ Success Response:
     "status": 1,
     "data": []
 }
+-----------------------------
+Validate OTP:
+{"action":"validate_otp","otp":"116924","phone":"7834908329"}
+http://econnecto.com/Waterfly/api/vendors/login.php
+Response:
+{
+  "message": [
+    "Login Successful"
+  ],
+  "status": 1,
+  "data": [
+    {
+      "id": "21",
+      "phone": "7834908329",
+      "vendor_name": "Vendor Name",
+      "plant_name": "PlantName",
+      "plant_phone": "9988776655",
+      "plant_address": "Plant Address",
+      "details_completed": "1",
+      "JWT_Token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9lY29ubmVjdG8uY29tIiwiYXVkIjoiaHR0cDpcL1wvZWNvbm5lY3RvLmNvbSIsImlhdCI6MTY0MDM4MjE5NiwibmJmIjoxNjQwMzgyMjA2LCJkYXRhIjp7ImlkIjoiM2M1OWRjMDQ4ZTg4NTAyNDNiZTgwNzlhNWM3NGQwNzkiLCJwaG9uZSI6MTc3MDYxNDYyMjQsImNvbW1lbnQiOiJpZCBhbmQgcGhvbmUgYXJlIGVuY3J5cHRlZC4gU2VlIHRoZSBEb2N1bWVudGF0aW9uIGJlZm9yZSB1c2UifX0.89ZXPeQmXHKN6tqbwUiRLeWrcApthzSNtzIx65XC3dg"
+    }
+  ]
+}

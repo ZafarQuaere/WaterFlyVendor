@@ -8,12 +8,10 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.asLiveData
 import com.google.android.material.snackbar.Snackbar
 import com.waterfly.vendor.R
+import com.waterfly.vendor.bgtask.LabeledSwitch
 import com.waterfly.vendor.network.RequestBodies
 import com.waterfly.vendor.repository.AppRepository
-import com.waterfly.vendor.util.DataStoreManager
-import com.waterfly.vendor.util.LogUtils
-import com.waterfly.vendor.util.Resource
-import com.waterfly.vendor.util.errorSnack
+import com.waterfly.vendor.util.*
 import com.waterfly.vendor.viewmodel.HomeViewModel
 import com.waterfly.vendor.viewmodel.ViewModelProviderFactory
 import kotlinx.android.synthetic.main.activity_home.*
@@ -29,6 +27,7 @@ class HomeActivity : AppCompatActivity() {
     lateinit var dataStoreManager: DataStoreManager
     private var token:String? = null
     private var vendorId:String? = null
+    lateinit var labeledSwitch: LabeledSwitch
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,6 +46,10 @@ class HomeActivity : AppCompatActivity() {
             vendorId = it
             vendorId?.let { vendorId ->LogUtils.DEBUG(vendorId) }
         })
+        dataStoreManager.getVendorData().asLiveData().observe(this, Observer {
+            LogUtils.DEBUG("Vendor name: ${it.vendor_name}")
+            textVendorName.text = "Welcome ${it.vendor_name}"
+        })
     }
 
     private fun initUI() {
@@ -54,12 +57,17 @@ class HomeActivity : AppCompatActivity() {
         val factory = ViewModelProviderFactory(application, repository)
         homeViewModel = ViewModelProvider(this, factory)[HomeViewModel::class.java]
 
-        textOffline.setOnClickListener {
+        labeledSwitch = findViewById(R.id.toggle1)
+        labeledSwitch.setOnToggledListener { toggleableView, isOn ->
+            vendorLiveStatus(isOn)
+        }
+
+       /* textOffline.setOnClickListener {
             vendorLiveStatus(false)
         }
         textOnline.setOnClickListener {
             vendorLiveStatus(true)
-        }
+        }*/
     }
 
     private fun vendorLiveStatus(isOnline: Boolean) {
@@ -75,7 +83,7 @@ class HomeActivity : AppCompatActivity() {
                         hideProgressBar()
                         response.data?.let {
                            //update UI
-
+                            updateSwitch(isOnline)
                         }
                     }
                     is Resource.Error -> {
@@ -90,6 +98,18 @@ class HomeActivity : AppCompatActivity() {
                 }
             }
         })
+    }
+
+    private fun updateSwitch(online: Boolean) {
+        if (labeledSwitch.isOn) {
+            imgBg.setBackgroundResource(R.drawable.online_home_bg2)
+//            labeledSwitch.labelOn = Constants.TAG_ONLINE
+//            labeledSwitch.setOn(true)
+        } else {
+            imgBg.setBackgroundResource(R.drawable.offline2)
+//            labeledSwitch.setOn(false)
+//            labeledSwitch.labelOff = Constants.TAG_OFFLINE
+        }
     }
 
     private fun hideProgressBar() {

@@ -17,18 +17,22 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication"
         android:usesCleartextTraffic="true">
-        <!--<activity
+        <activity
+            android:name=".bgtask.ToggleActivity"
+            android:exported="false" />
+        <!--
+        <activity
             android:name=".bgtask.BGDemo"
             android:exported="false" />
-        --><activity
+        -->
+        <activity
             android:name=".ui.HomeActivity"
             android:exported="false" />
         <activity
             android:name=".ui.VendorDetailsActivity"
             android:exported="false" />
-       <!-- android:name=".ui.EnterMobileActivity"-->
         <activity
-            android:name=".bgtask.BGDemo"
+            android:name=".ui.EnterMobileActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -12,27 +12,24 @@
         android:id="@+id/llName"
         android:layout_width="match_parent"
         app:cardElevation="@dimen/_20sdp"
-        android:layout_height="@dimen/_140sdp">
+        android:layout_height="@dimen/_160sdp">
         <TextView
-            android:id="@+id/textVendorName"
             android:background="@drawable/top_home_gradient"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:textSize="@dimen/_20ssp"
-            android:textStyle="bold"
             android:text="Welcome Mr Peter Parker"/>
 
     </androidx.cardview.widget.CardView>
 
-  <ImageView
-      android:id="@+id/imgBg"
-      android:layout_width="match_parent"
-      android:layout_below="@+id/llName"
-      android:background="@drawable/offline2"
-      android:layout_above="@+id/toggle1"
-      android:layout_height="wrap_content"
-      android:orientation="horizontal" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:background="@drawable/online_home_bg2"
+        android:layout_height="wrap_content"/>
+
+
+
 
     <ProgressBar
         android:id="@+id/progress"
@@ -42,15 +39,18 @@
         android:layout_centerInParent="true"
         android:visibility="gone"/>
 
-    <com.waterfly.vendor.bgtask.LabeledSwitch
-        android:layout_alignParentBottom="true"
-        android:layout_marginVertical="@dimen/_10sdp"
-        android:layout_marginHorizontal="@dimen/_10sdp"
-        android:id="@+id/toggle1"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:checked="true"
-        android:textOff="@string/offline"
-        android:textOn="@string/online"/>
 
-</RelativeLayout>
+
+        <com.waterfly.vendor.bgtask.LabeledSwitch
+            android:layout_alignParentBottom="true"
+            android:layout_marginVertical="@dimen/_10sdp"
+            android:layout_marginHorizontal="@dimen/_10sdp"
+            android:id="@+id/toggle1"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:checked="true"
+            android:textOff="@string/offline"
+            android:textOn="@string/online"/>
+
+
+</LinearLayout>

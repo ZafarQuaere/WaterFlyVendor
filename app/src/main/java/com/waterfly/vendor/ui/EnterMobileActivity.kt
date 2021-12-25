@@ -11,6 +11,7 @@ import androidx.lifecycle.asLiveData
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.snackbar.Snackbar
 import com.waterfly.vendor.R
+import com.waterfly.vendor.bgtask.ToggleActivity
 import com.waterfly.vendor.model.ValidateOTPResponse
 import com.waterfly.vendor.model.ValidateUserData
 import com.waterfly.vendor.network.RequestBodies
@@ -34,16 +35,22 @@ class EnterMobileActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         dataStoreManager = DataStoreManager(this@EnterMobileActivity)
+//        moveToActivity()
         dataStoreManager.isUserLogin.asLiveData().observe(this, Observer {
             if (it){
                 val intent = Intent(this@EnterMobileActivity, HomeActivity::class.java)
                 startActivity(intent)
+                finish()
             } else {
                 setContentView(R.layout.activity_enter_mobile)
                 init()
             }
         })
 
+    }
+
+    private fun moveToActivity() {
+        startActivity(Intent(this@EnterMobileActivity,ToggleActivity::class.java))
     }
 
     private fun init() {
@@ -69,7 +76,7 @@ class EnterMobileActivity : AppCompatActivity() {
                                 } else {
                                     response.message?.get(0)
                                         ?.let { message ->
-                                            progress.errorSnack(message.toString(), Snackbar.LENGTH_LONG)
+                                            progress.showSnack(message.toString(), Snackbar.LENGTH_LONG)
                                         }
                                 }
                             }
@@ -159,6 +166,7 @@ class EnterMobileActivity : AppCompatActivity() {
     private suspend fun storeDataAndNavigateToHome(vendorData: ValidateUserData) {
         dataStoreManager.storeToken(vendorData.JWT_Token)
         dataStoreManager.storeVendorId(vendorData.id)
+        dataStoreManager.storeVendorData(vendorData)
         dataStoreManager.setUserLogin(true)
         startActivity(Intent(this@EnterMobileActivity,HomeActivity::class.java))
     }
