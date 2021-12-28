@@ -50,7 +50,7 @@ class EnterMobileActivity : AppCompatActivity() {
     }
 
     private fun moveToActivity() {
-        startActivity(Intent(this@EnterMobileActivity,ToggleActivity::class.java))
+        startActivity(Intent(this@EnterMobileActivity,VendorDetailsActivity::class.java))
     }
 
     private fun init() {

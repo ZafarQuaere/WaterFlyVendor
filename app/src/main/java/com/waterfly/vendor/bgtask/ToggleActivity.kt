@@ -13,7 +13,7 @@ class ToggleActivity : AppCompatActivity() {
         setContentView(R.layout.activity_toggle)
         labeledSwitch = findViewById(R.id.toggle1)
 
-        labeledSwitch.setOnToggledListener { toggleableView, isOn ->
+        labeledSwitch.setOnToggledListener { toggleableView ,isOn ->
             if (isOn){
                 labeledSwitch.labelOn = Constants.TAG_ONLINE
                 labeledSwitch.setOn(true)

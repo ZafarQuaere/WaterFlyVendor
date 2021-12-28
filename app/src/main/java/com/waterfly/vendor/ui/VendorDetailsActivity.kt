@@ -53,28 +53,28 @@ class VendorDetailsActivity : AppCompatActivity() {
     fun addDetails(view: View) {
         val vendorName = editVendorName.text.toString()
         val plantName = editPlantName.text.toString()
-        val plantPhone = editPlantPhone.text.toString()
-        val plantAdd = editPlantAddress.text.toString()
+        val pincode = editVPincode.text.toString()
+        val vendorAddress = editVendorAddress.text.toString()
         hideKeyboard(view)
-        validateInput(vendorName, plantName, plantPhone, plantAdd)
+        validateInput(vendorName, plantName, pincode, vendorAddress)
     }
 
     private fun validateInput(
         vendorName: String, plantName: String,
-        plantPhone: String, plantAdd: String
+        pincode: String, address: String
     ) {
 
         if (vendorName.isEmpty() || vendorName.length < 3) {
             progress.errorSnack(getString(R.string.enter_valid_vendor_name), Snackbar.LENGTH_LONG)
+        } else if (address.isEmpty() || address.length < 3) {
+            progress.errorSnack(getString(R.string.enter_valid_address), Snackbar.LENGTH_LONG)
+        } else if (pincode.isEmpty() || pincode.length < 6) {
+            progress.errorSnack(getString(R.string.enter_valid_area_pincode), Snackbar.LENGTH_LONG)
         } else if (plantName.isEmpty() || plantName.length < 3) {
             progress.errorSnack(getString(R.string.enter_valid_plant_name), Snackbar.LENGTH_LONG)
-        } else if (plantPhone.isEmpty() || plantPhone.length < 10) {
-            progress.errorSnack(getString(R.string.enter_valid_mobile_no), Snackbar.LENGTH_LONG)
-        } else if (plantAdd.isEmpty() || plantAdd.length < 3) {
-            progress.errorSnack(getString(R.string.enter_valid_address), Snackbar.LENGTH_LONG)
         } else {
             val body = RequestBodies.VendorDetailBody(token,vendorId,
-                vendorName, plantName, plantPhone, plantAdd)
+                vendorName, "$address $pincode", plantName)
 
             vendorViewModel.updateVendor(body)
             observeVendor()

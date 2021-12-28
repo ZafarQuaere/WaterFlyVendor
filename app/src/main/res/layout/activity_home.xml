@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -8,27 +7,20 @@
     android:background="@color/white"
     tools:context=".ui.HomeActivity">
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/llName"
+    <TextView
+        android:id="@+id/textVendorName"
         android:layout_width="match_parent"
-        app:cardElevation="@dimen/_20sdp"
-        android:layout_height="@dimen/_140sdp">
-        <TextView
-            android:id="@+id/textVendorName"
-            android:background="@drawable/top_home_gradient"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:textSize="@dimen/_20ssp"
-            android:textStyle="bold"
-            android:text="Welcome Mr Peter Parker"/>
-
-    </androidx.cardview.widget.CardView>
+        android:layout_height="@dimen/_140sdp"
+        android:background="@drawable/top_home_gradient"
+        android:gravity="center"
+        android:text="Welcome Mr Peter Parker"
+        android:textSize="@dimen/_20ssp"
+        android:textStyle="bold" />
 
   <ImageView
       android:id="@+id/imgBg"
       android:layout_width="match_parent"
-      android:layout_below="@+id/llName"
+      android:layout_below="@+id/textVendorName"
       android:background="@drawable/offline2"
       android:layout_above="@+id/toggle1"
       android:layout_height="wrap_content"
