@@ -11,7 +11,6 @@ import androidx.lifecycle.asLiveData
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.snackbar.Snackbar
 import com.waterfly.vendor.R
-import com.waterfly.vendor.bgtask.ToggleActivity
 import com.waterfly.vendor.model.ValidateOTPResponse
 import com.waterfly.vendor.model.ValidateUserData
 import com.waterfly.vendor.network.RequestBodies
@@ -20,9 +19,6 @@ import com.waterfly.vendor.util.*
 import com.waterfly.vendor.viewmodel.LoginViewModel
 import com.waterfly.vendor.viewmodel.ViewModelProviderFactory
 import kotlinx.android.synthetic.main.activity_enter_mobile.*
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 
 

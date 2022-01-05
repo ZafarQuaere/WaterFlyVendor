@@ -34,7 +34,7 @@
         android:layout_centerInParent="true"
         android:visibility="gone"/>
 
-    <com.waterfly.vendor.bgtask.LabeledSwitch
+    <com.waterfly.vendor.toggle.LabeledSwitch
         android:layout_alignParentBottom="true"
         android:layout_marginVertical="@dimen/_10sdp"
         android:layout_marginHorizontal="@dimen/_10sdp"

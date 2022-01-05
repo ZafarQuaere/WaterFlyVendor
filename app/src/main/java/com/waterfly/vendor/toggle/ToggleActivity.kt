@@ -1,8 +1,7 @@
-package com.waterfly.vendor.bgtask
+package com.waterfly.vendor.toggle
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Toast
 import com.waterfly.vendor.R
 import com.waterfly.vendor.util.Constants
 

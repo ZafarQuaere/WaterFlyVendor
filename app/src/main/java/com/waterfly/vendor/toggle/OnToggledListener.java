@@ -1,5 +1,5 @@
 
-package com.waterfly.vendor.bgtask;
+package com.waterfly.vendor.toggle;
 
 
 public interface OnToggledListener {

@@ -1,5 +1,5 @@
 
-package com.waterfly.vendor.bgtask;
+package com.waterfly.vendor.toggle;
 
 import android.animation.ValueAnimator;
 import android.content.Context;

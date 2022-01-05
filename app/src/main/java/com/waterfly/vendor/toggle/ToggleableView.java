@@ -1,4 +1,4 @@
-package com.waterfly.vendor.bgtask;
+package com.waterfly.vendor.toggle;
 
 import android.content.Context;
 import android.util.AttributeSet;

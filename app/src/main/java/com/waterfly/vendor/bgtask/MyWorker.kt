@@ -13,7 +13,7 @@ class MyWorker(context: Context, workerParameters: WorkerParameters): Worker(con
             try {
             Thread.sleep(1000)
                 println("doWork >>>.. $i")
-                if (i == 10){
+                if (i == 20){
                     break
                 }
             } catch (e: Exception){

@@ -18,13 +18,11 @@
         android:theme="@style/Theme.MyApplication"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".bgtask.ToggleActivity"
+            android:name=".toggle.ToggleActivity"
             android:exported="false" />
-        <!--
         <activity
             android:name=".bgtask.BGDemo"
             android:exported="false" />
-        -->
         <activity
             android:name=".ui.HomeActivity"
             android:exported="false" />

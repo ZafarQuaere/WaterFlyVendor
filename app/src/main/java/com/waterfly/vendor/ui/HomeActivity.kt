@@ -8,7 +8,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.asLiveData
 import com.google.android.material.snackbar.Snackbar
 import com.waterfly.vendor.R
-import com.waterfly.vendor.bgtask.LabeledSwitch
+import com.waterfly.vendor.toggle.LabeledSwitch
 import com.waterfly.vendor.network.RequestBodies
 import com.waterfly.vendor.repository.AppRepository
 import com.waterfly.vendor.util.*
