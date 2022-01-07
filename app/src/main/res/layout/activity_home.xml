@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:background="@color/white"
     tools:context=".ui.HomeActivity">
@@ -10,21 +11,30 @@
     <TextView
         android:id="@+id/textVendorName"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_140sdp"
+        android:layout_height="@dimen/_120sdp"
         android:background="@drawable/top_home_gradient"
         android:gravity="center"
         android:text="Welcome Mr Peter Parker"
         android:textSize="@dimen/_20ssp"
         android:textStyle="bold" />
 
+
   <ImageView
       android:id="@+id/imgBg"
       android:layout_width="match_parent"
       android:layout_below="@+id/textVendorName"
       android:background="@drawable/offline2"
-      android:layout_above="@+id/toggle1"
-      android:layout_height="wrap_content"
+      android:layout_height="@dimen/home_bg_height"
       android:orientation="horizontal" />
+
+    <fragment
+        android:layout_below="@+id/imgBg"
+        android:id="@+id/mapFrag"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="visible"
+        app:liteMode="true" />
 
     <ProgressBar
         android:id="@+id/progress"
@@ -36,7 +46,7 @@
 
     <com.waterfly.vendor.toggle.LabeledSwitch
         android:layout_alignParentBottom="true"
-        android:layout_marginVertical="@dimen/_10sdp"
+        android:layout_marginBottom="@dimen/_10sdp"
         android:layout_marginHorizontal="@dimen/_10sdp"
         android:id="@+id/toggle1"
         android:layout_width="match_parent"

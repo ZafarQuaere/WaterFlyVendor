@@ -46,7 +46,8 @@ class EnterMobileActivity : AppCompatActivity() {
     }
 
     private fun moveToActivity() {
-        startActivity(Intent(this@EnterMobileActivity,VendorDetailsActivity::class.java))
+        startActivity(Intent(this@EnterMobileActivity, HomeActivity::class.java))
+        finish()
     }
 
     private fun init() {
@@ -165,6 +166,7 @@ class EnterMobileActivity : AppCompatActivity() {
         dataStoreManager.storeVendorData(vendorData)
         dataStoreManager.setUserLogin(true)
         startActivity(Intent(this@EnterMobileActivity,HomeActivity::class.java))
+        finish()
     }
 
     private fun hideProgressBar() {

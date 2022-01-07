@@ -8,5 +8,8 @@ object RequestBodies {
                                 val vendor_address: String, val plant_name:String)
 
     data class VendorStatusBody(val jwt_token:String? , val action:String, val vendor_id: String?,
-                                val vendor_latitude:String?, val vendor_longitude:String?)
+                                val vendor_latitude:String, val vendor_longitude:String)
+
+    data class VendorLiveLocationBody(val jwt_token: String?,val vendor_id: String?, val vendor_latitude: String,
+                                        val vendor_longitude: String)
 }

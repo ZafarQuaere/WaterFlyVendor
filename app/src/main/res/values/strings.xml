@@ -28,4 +28,12 @@
     <string name="address">Address</string>
     <string name="pincode">Pincode</string>
     <string name="enter_valid_area_pincode">Enter Valid Area Pincode</string>
+
+    <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">
+         AIzaSyBulyTj2UyG7tnyG_5xf4DGk70o08hEC1c
+    </string>
+
+    <!--<string name="google_maps_key">AIzaSyDVDloatevH6ZB2dNqorDljbt1rGlDVpoQ</string>-->
+    <!--<string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">
+        AIzaSyD6Uz6ARw0-7DEULuudZOYddm7lGT8gePM</string>-->
 </resources>

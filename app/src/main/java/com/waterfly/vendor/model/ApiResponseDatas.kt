@@ -10,3 +10,5 @@ data class ValidateUserData(val id: String,val phone:String,val vendor_name: Str
 data class VendorDetailResponse(val status: Int, val message: List<String>?, val data: List<Any?>?)
 
 data class VendorStatusResponse(val status: Int, val message: List<String>?, val data: List<Any?>?)
+
+data class VendorLiveLocationResponse(val status: Int, val message: List<String>?, val data: List<Any?>?)

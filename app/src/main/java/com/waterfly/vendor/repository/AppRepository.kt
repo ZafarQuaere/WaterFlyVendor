@@ -16,4 +16,7 @@ class AppRepository {
 
     suspend fun setVendorStatus(body: RequestBodies.VendorStatusBody) =
         RetrofitInstance.updateVendorStatus.vendorLiveStatus(body)
+
+    suspend fun setVendorLocationStatus(body: RequestBodies.VendorLiveLocationBody) =
+        RetrofitInstance.updateVendorLocationStatus.vendorLiveLocation(body)
 }

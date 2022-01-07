@@ -1,9 +1,13 @@
 package com.waterfly.vendor.util
 
+import android.app.AlertDialog
 import android.content.Context
+import android.content.DialogInterface
+import android.content.Intent
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
+import android.provider.Settings
 import com.waterfly.vendor.app.MyApplication
 
 object Utils {
@@ -31,6 +35,24 @@ object Utils {
             }
         }
         return false
+    }
+
+    fun showSettingsAlert(mContext: Context) {
+        val alertDialog = AlertDialog.Builder(mContext)
+        // Setting Dialog Title
+        alertDialog.setTitle("GPS is settings")
+
+        // Setting Dialog Message
+        alertDialog.setMessage("GPS is not enabled. Do you want to go to settings menu?")
+
+        // On pressing Settings button
+        alertDialog.setPositiveButton("Settings") { dialog, which ->
+            val intent = Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
+            mContext.startActivity(intent)
+        }
+        // on pressing cancel button
+        alertDialog.setNegativeButton("Cancel") { dialog, which -> dialog.cancel() }
+        alertDialog.show()
     }
 
     fun hideKeyboard(){

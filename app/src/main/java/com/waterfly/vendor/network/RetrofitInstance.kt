@@ -55,6 +55,19 @@ class RetrofitInstance {
                 .build()
         }
 
+        private val updateVendorLiveLocationRequest by lazy {
+            val logging = HttpLoggingInterceptor()
+            logging.setLevel(HttpLoggingInterceptor.Level.BODY)
+            val client = OkHttpClient.Builder()
+                .addInterceptor(logging)
+                .callTimeout(18,TimeUnit.SECONDS)
+                .build()
+            Retrofit.Builder()
+                .baseUrl(BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(client)
+                .build()
+        }
 
         val loginApi by lazy {
             retrofitLogin.create(API::class.java)
@@ -66,6 +79,10 @@ class RetrofitInstance {
 
         val updateVendorStatus by lazy {
             updateVendorStatusRequest.create(API::class.java)
+        }
+
+        val updateVendorLocationStatus by lazy {
+            updateVendorLiveLocationRequest.create(API::class.java)
         }
     }
 }
