@@ -10,6 +10,7 @@ import androidx.fragment.app.FragmentActivity
 import android.os.Bundle
 import androidx.core.app.ActivityCompat
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -20,6 +21,7 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.waterfly.vendor.R
+import kotlinx.android.synthetic.main.on_off_toggle.*
 
 class PokemonMapsActivity : FragmentActivity(), OnMapReadyCallback  {
 
@@ -33,8 +35,22 @@ class PokemonMapsActivity : FragmentActivity(), OnMapReadyCallback  {
         val mapFragment = supportFragmentManager
                 .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
-
+        initUI()
         checkPermmison()
+    }
+
+    private fun initUI() {
+
+        lytOffline.setOnClickListener {
+            lytOffline.visibility = View.GONE
+            lytOnline.visibility = View.VISIBLE
+        }
+
+        lytOnline.setOnClickListener {
+            lytOffline.visibility = View.VISIBLE
+            lytOnline.visibility = View.GONE
+        }
+
     }
 
     var ACCESSLOCATION=123

@@ -11,6 +11,7 @@ import androidx.lifecycle.asLiveData
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.snackbar.Snackbar
 import com.waterfly.vendor.R
+import com.waterfly.vendor.bgtask.PokemonMapsActivity
 import com.waterfly.vendor.model.ValidateOTPResponse
 import com.waterfly.vendor.model.ValidateUserData
 import com.waterfly.vendor.network.RequestBodies
@@ -42,11 +43,10 @@ class EnterMobileActivity : AppCompatActivity() {
                 init()
             }
         })
-
     }
 
     private fun moveToActivity() {
-        startActivity(Intent(this@EnterMobileActivity, HomeActivity::class.java))
+        startActivity(Intent(this@EnterMobileActivity, PokemonMapsActivity::class.java))
         finish()
     }
 

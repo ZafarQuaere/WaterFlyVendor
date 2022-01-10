@@ -27,6 +27,7 @@ import com.waterfly.vendor.util.*
 import com.waterfly.vendor.viewmodel.HomeViewModel
 import com.waterfly.vendor.viewmodel.ViewModelProviderFactory
 import kotlinx.android.synthetic.main.activity_home.*
+import kotlinx.android.synthetic.main.on_off_toggle.*
 
 //TODO 1 Ask location permission
 //TODO 2 Check GPS Enable
@@ -40,7 +41,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback {
     lateinit var dataStoreManager: DataStoreManager
     private var token:String? = null
     private var vendorId:String? = null
-    lateinit var labeledSwitch: LabeledSwitch
+//    lateinit var labeledSwitch: LabeledSwitch
     lateinit var mMap: GoogleMap
     private var ACCESSLOCATION = 123
     lateinit var mLocation: Location
@@ -119,11 +120,22 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback {
         val factory = ViewModelProviderFactory(application, repository)
         homeViewModel = ViewModelProvider(this, factory)[HomeViewModel::class.java]
 
-        labeledSwitch = findViewById(R.id.toggle1)
+        lytOffline.setOnClickListener {
+            lytOffline.visibility = View.GONE
+            lytOnline.visibility = View.VISIBLE
+            vendorLiveStatus(true)
+        }
+
+        lytOnline.setOnClickListener {
+            lytOffline.visibility = View.VISIBLE
+            lytOnline.visibility = View.GONE
+            vendorLiveStatus(false)
+        }
+
+       /* labeledSwitch = findViewById(R.id.toggle1)
         labeledSwitch.setOnToggledListener { toggleableView, isOn ->
             vendorLiveStatus(isOn)
-
-        }
+        }*/
     }
 
     private fun vendorLiveStatus(isOnline: Boolean) {
@@ -139,21 +151,20 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback {
                         hideProgressBar()
                         response.data?.let {
                             //Update UI
-                            labeledSwitch.isEnabled = true
+                            if(response.data.status == 1) {
+                                updateSwitch(vendorLiveStatus)
+                            }
                             vendorLiveStatus = isOnline
-                            updateSwitch(isOnline)
                         }
                     }
                     is Resource.Error -> {
                         hideProgressBar()
                         vendorLiveStatus = isOnline
-                        labeledSwitch.isEnabled = true
                         response.message?.let { message ->
                             progress.errorSnack(message, Snackbar.LENGTH_LONG)
                         }
                     }
                     is Resource.Loading -> {
-                        labeledSwitch.isEnabled = false
                         showProgressBar()
                     }
                 }
@@ -162,7 +173,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback {
     }
 
     private fun updateSwitch(online: Boolean) {
-        if (labeledSwitch.isOn) {
+        if (online) {
             imgBg.setBackgroundResource(R.drawable.online_home_bg2)
 //            labeledSwitch.labelOn = Constants.TAG_ONLINE
 //            labeledSwitch.setOn(true)
@@ -193,8 +204,8 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback {
         uiSettings.isZoomControlsEnabled = true
     }
 
-    inner class VendorLocationListener: LocationListener {
-        constructor(){
+    inner class VendorLocationListener : LocationListener {
+        init {
             mLocation = Location("Start")
             mLocation.longitude = 0.0
             mLocation.longitude = 0.0
@@ -236,9 +247,8 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback {
     }
 
 
-    inner class LocationThread:Thread{
-
-        constructor():super(){
+    inner class LocationThread : Thread() {
+        init {
             mOldLocation= Location("Start")
             mOldLocation!!.longitude=0.0
             mOldLocation!!.longitude=0.0
@@ -252,14 +262,14 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback {
                     }
                     mOldLocation=mLocation
                     runOnUiThread {
-                        mMap!!.clear()
+                        mMap.clear()
                         // show me
-                        val sydney = LatLng(mLocation.latitude, mLocation.longitude)
-                        mMap!!.addMarker(MarkerOptions()
-                            .position(sydney)
+                        val myLocation = LatLng(mLocation.latitude, mLocation.longitude)
+                        mMap.addMarker(MarkerOptions()
+                            .position(myLocation)
                             .title("Me")
                             .icon(BitmapDescriptorFactory.fromResource(R.drawable.location_48)))
-                        mMap!!.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney, 14f))
+                        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(myLocation, 14f))
                     }
                     Thread.sleep(1000)
                 }catch (ex:Exception){}
