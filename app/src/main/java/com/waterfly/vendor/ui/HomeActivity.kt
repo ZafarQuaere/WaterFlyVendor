@@ -20,7 +20,6 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.snackbar.Snackbar
 import com.waterfly.vendor.R
-import com.waterfly.vendor.toggle.LabeledSwitch
 import com.waterfly.vendor.network.RequestBodies
 import com.waterfly.vendor.repository.AppRepository
 import com.waterfly.vendor.util.*
@@ -41,7 +40,6 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback {
     lateinit var dataStoreManager: DataStoreManager
     private var token:String? = null
     private var vendorId:String? = null
-//    lateinit var labeledSwitch: LabeledSwitch
     lateinit var mMap: GoogleMap
     private var ACCESSLOCATION = 123
     lateinit var mLocation: Location
@@ -132,10 +130,6 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback {
             vendorLiveStatus(false)
         }
 
-       /* labeledSwitch = findViewById(R.id.toggle1)
-        labeledSwitch.setOnToggledListener { toggleableView, isOn ->
-            vendorLiveStatus(isOn)
-        }*/
     }
 
     private fun vendorLiveStatus(isOnline: Boolean) {
@@ -175,12 +169,8 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback {
     private fun updateSwitch(online: Boolean) {
         if (online) {
             imgBg.setBackgroundResource(R.drawable.online_home_bg2)
-//            labeledSwitch.labelOn = Constants.TAG_ONLINE
-//            labeledSwitch.setOn(true)
         } else {
             imgBg.setBackgroundResource(R.drawable.offline2)
-//            labeledSwitch.setOn(false)
-//            labeledSwitch.labelOff = Constants.TAG_OFFLINE
         }
     }
 

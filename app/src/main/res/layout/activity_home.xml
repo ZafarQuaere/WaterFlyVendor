@@ -52,16 +52,6 @@
         android:layout_height="wrap_content"
         android:layout_width="match_parent" />
 
-    <com.waterfly.vendor.toggle.LabeledSwitch
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="@dimen/_10sdp"
-        android:layout_marginHorizontal="@dimen/_10sdp"
-        android:id="@+id/toggle1"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:checked="true"
-        android:visibility="gone"
-        android:textOff="@string/offline"
-        android:textOn="@string/online"/>
+
 
 </RelativeLayout>
