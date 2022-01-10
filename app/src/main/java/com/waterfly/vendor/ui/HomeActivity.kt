@@ -137,7 +137,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback {
 
         val body = RequestBodies.VendorStatusBody(token,action,vendorId,mLocation.latitude.toString(),mLocation.longitude.toString())
         homeViewModel.setVendorLiveStatus(body)
-
+        vendorLiveStatus = isOnline
         homeViewModel.vendorLiveStatusResponse.observe(this, Observer { event ->
             event.getContentIfNotHandled()?.let { response ->
                 when (response) {
@@ -148,12 +148,11 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback {
                             if(response.data.status == 1) {
                                 updateSwitch(vendorLiveStatus)
                             }
-                            vendorLiveStatus = isOnline
+
                         }
                     }
                     is Resource.Error -> {
                         hideProgressBar()
-                        vendorLiveStatus = isOnline
                         response.message?.let { message ->
                             progress.errorSnack(message, Snackbar.LENGTH_LONG)
                         }

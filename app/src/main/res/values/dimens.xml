@@ -3,7 +3,7 @@
     <dimen name="labeled_default_width">72dp</dimen>
     <dimen name="labeled_default_height">32dp</dimen>
     <dimen name="map_height">200dp</dimen>
-    <dimen name="home_bg_height">150dp</dimen>
+    <dimen name="home_bg_height">250dp</dimen>
     <dimen name="_10dp">10dp</dimen>
 
 </resources>

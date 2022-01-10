@@ -11,7 +11,7 @@
     <TextView
         android:id="@+id/textVendorName"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_120sdp"
+        android:layout_height="@dimen/_80sdp"
         android:background="@drawable/top_home_gradient"
         android:gravity="center"
         android:text="Welcome Mr Peter Parker"
@@ -22,17 +22,17 @@
   <ImageView
       android:id="@+id/imgBg"
       android:layout_width="match_parent"
-      android:layout_below="@+id/textVendorName"
+      android:layout_below="@+id/mapFrag"
       android:background="@drawable/offline2"
-      android:layout_height="@dimen/home_bg_height"
+      android:layout_height="match_parent"
       android:orientation="horizontal" />
 
     <fragment
-        android:layout_below="@+id/imgBg"
         android:id="@+id/mapFrag"
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="@dimen/map_height"
+        android:layout_below="@+id/textVendorName"
         android:visibility="visible"
         app:liteMode="true" />
 
