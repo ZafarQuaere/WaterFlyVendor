@@ -94,7 +94,6 @@ class PokemonMapsActivity : FragmentActivity(), OnMapReadyCallback  {
                 }
             }
         }
-
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
     }
 
@@ -182,13 +181,5 @@ class PokemonMapsActivity : FragmentActivity(), OnMapReadyCallback  {
 
     }
 
-
-     var playerPower=0.0
-    var listPockemons=ArrayList<Pockemon>()
-
-
-    fun updateLocation(location: Location) {
-
-    }
 
 }

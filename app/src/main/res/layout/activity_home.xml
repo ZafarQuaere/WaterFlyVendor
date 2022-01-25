@@ -5,8 +5,8 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:background="@color/white"
     tools:context=".ui.HomeActivity">
+
 
     <TextView
         android:id="@+id/textVendorName"
@@ -14,27 +14,38 @@
         android:layout_height="@dimen/_80sdp"
         android:background="@drawable/top_home_gradient"
         android:gravity="center"
+        android:onClick="navigateToBg"
         android:text="Welcome Mr Peter Parker"
         android:textSize="@dimen/_20ssp"
         android:textStyle="bold" />
 
-
-  <ImageView
-      android:id="@+id/imgBg"
-      android:layout_width="match_parent"
-      android:layout_below="@+id/mapFrag"
-      android:background="@drawable/offline2"
-      android:layout_height="match_parent"
-      android:orientation="horizontal" />
-
-    <fragment
-        android:id="@+id/mapFrag"
-        android:name="com.google.android.gms.maps.SupportMapFragment"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/map_height"
-        android:layout_below="@+id/textVendorName"
+    <androidx.cardview.widget.CardView
         android:visibility="visible"
-        app:liteMode="true" />
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginHorizontal="@dimen/_10dp"
+        android:layout_gravity="center_horizontal|center_vertical"
+        android:layout_below="@+id/textVendorName"
+        android:layout_above="@+id/lytBottom"
+        app:cardCornerRadius="36dp"
+        app:cardElevation="22dp">
+        <fragment
+            android:id="@+id/mapFrag"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:liteMode="true" />
+    </androidx.cardview.widget.CardView>
+
+
+    <ImageView
+        android:id="@+id/imgBg"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="20dp"
+        android:visibility="gone"
+        android:background="@drawable/offline2"
+        android:orientation="horizontal" />
 
     <ProgressBar
         android:id="@+id/progress"
@@ -45,13 +56,13 @@
         android:visibility="gone"/>
 
     <include
+        android:id="@+id/lytBottom"
         android:layout_alignParentBottom="true"
         layout="@layout/on_off_toggle"
         android:layout_marginBottom="@dimen/_10dp"
         android:layout_marginHorizontal="@dimen/_15sdp"
         android:layout_height="wrap_content"
         android:layout_width="match_parent" />
-
 
 
 </RelativeLayout>
