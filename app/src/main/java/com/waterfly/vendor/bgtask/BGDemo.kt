@@ -65,8 +65,6 @@ class BGDemo : AppCompatActivity(), WfLocationListener,OnMapReadyCallback {
             }
             .create()
             .show()
-      /*  val permList = arrayOf( Manifest.permission.ACCESS_BACKGROUND_LOCATION)
-        ActivityCompat.requestPermissions(this,permList,BG_REQUEST_PERMISSIONS)*/
     }
 
     private fun locationPermission() {

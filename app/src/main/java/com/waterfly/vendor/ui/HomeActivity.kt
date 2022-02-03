@@ -4,6 +4,7 @@ import android.Manifest
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.drawable.ColorDrawable
 import android.location.Location
 import android.location.LocationListener
 import android.location.LocationManager
@@ -11,13 +12,16 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.view.Window
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.view.WindowCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.asLiveData
+import com.bumptech.glide.Glide
 import com.google.android.gms.maps.*
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
@@ -58,11 +62,13 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+//        window.requestFeature(WindowCompat.FEATURE_ACTION_BAR_OVERLAY);
         setContentView(R.layout.activity_home)
         initMap()
         dataStoreManager = DataStoreManager(this)
         observeData()
         initUI()
+        supportActionBar?.setBackgroundDrawable(ColorDrawable(ContextCompat.getColor(this, R.color.md_blue_500)))
     }
 
     private fun startLocationService() {
@@ -118,7 +124,6 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback {
     }
 
     private fun getUserLocation() {
-//        Toast.makeText(this,"User location access on", Toast.LENGTH_LONG).show()
         val myLocation = VendorLocationListener()
         val locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
         // getting GPS status
@@ -154,19 +159,14 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback {
         val repository = AppRepository()
         val factory = ViewModelProviderFactory(application, repository)
         homeViewModel = ViewModelProvider(this, factory)[HomeViewModel::class.java]
+        Glide.with(this).load(R.drawable.offline).into(imgBg)
 
-        lytOffline.setOnClickListener {
-            lytOffline.visibility = View.GONE
-            lytOnline.visibility = View.VISIBLE
+        cardOffline.setOnClickListener {
             vendorLiveStatus(true)
-            startLocationService()
         }
 
-        lytOnline.setOnClickListener {
-            lytOffline.visibility = View.VISIBLE
-            lytOnline.visibility = View.GONE
+        cardOnline.setOnClickListener {
             vendorLiveStatus(false)
-            stopLocationService()
         }
     }
 
@@ -181,7 +181,6 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback {
 
         val body = RequestBodies.VendorStatusBody(token,action,vendorId,mLocation.latitude.toString(),mLocation.longitude.toString())
         homeViewModel.setVendorLiveStatus(body)
-        vendorLiveStatus = isOnline
         homeViewModel.vendorLiveStatusResponse.observe(this, Observer { event ->
             event.getContentIfNotHandled()?.let { response ->
                 when (response) {
@@ -191,8 +190,9 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback {
                             //Update UI
                             if(response.data.status == 1) {
                                 updateSwitch(vendorLiveStatus)
+                            } else {
+                                LogUtils.showToast(this, response.data.message?.get(0))
                             }
-
                         }
                     }
                     is Resource.Error -> {
@@ -210,10 +210,17 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback {
     }
 
     private fun updateSwitch(online: Boolean) {
-        if (online) {
-            imgBg.setBackgroundResource(R.drawable.online_home_bg2)
+        vendorLiveStatus = online
+            if (online){
+            startLocationService()
+            imgBg.visibility =  View.GONE
+            cardOffline.visibility = View.GONE
+            cardOnline.visibility = View.VISIBLE
         } else {
-            imgBg.setBackgroundResource(R.drawable.offline2)
+            stopLocationService()
+            imgBg.visibility =  View.VISIBLE
+            cardOffline.visibility = View.VISIBLE
+            cardOnline.visibility = View.GONE
         }
     }
 
@@ -227,7 +234,6 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback {
 
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
-        mMap.setMinZoomPreference(12F)
         mMap.isIndoorEnabled = true
         val uiSettings: UiSettings = mMap.uiSettings
         uiSettings.isIndoorLevelPickerEnabled = true
@@ -235,6 +241,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback {
         uiSettings.isMapToolbarEnabled = true
         uiSettings.isCompassEnabled = true
         uiSettings.isZoomControlsEnabled = true
+        mMap.animateCamera(CameraUpdateFactory.zoomTo(18F),5000,null)
     }
 
 
@@ -321,9 +328,9 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback {
             REQUEST_LOCATION_PERMISSION -> {
                 if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
 //                    boolean_permission = true
+                    getUserLocation()
                 } else {
                     LogUtils.showToast(this,"Please Allow the permission")
-
                 }
             }
             REQUEST_BG_LOCATION_PERMISSION -> {
@@ -337,15 +344,17 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback {
     }
 
     override fun onDetachedFromWindow() {
+        stopLocationService()
+        vendorLiveStatus(false)
         LogUtils.error("$TAG onDetachedFromWindow Called :: ")
         super.onDetachedFromWindow()
-        vendorLiveStatus(false)
     }
 
     override fun onDestroy() {
+        stopLocationService()
+        vendorLiveStatus(false)
         LogUtils.error("$TAG onDestroy Called :: ")
         super.onDestroy()
-        vendorLiveStatus(false)
     }
 }
 
