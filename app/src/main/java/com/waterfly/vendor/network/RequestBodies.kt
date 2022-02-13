@@ -12,4 +12,6 @@ object RequestBodies {
 
     data class VendorLiveLocationBody(val jwt_token: String?,val vendor_id: String?, val vendor_latitude: String,
                                         val vendor_longitude: String)
+
+    data class GetVendorStatusBody(val jwt_token: String?, val vendor_id: String?)
 }

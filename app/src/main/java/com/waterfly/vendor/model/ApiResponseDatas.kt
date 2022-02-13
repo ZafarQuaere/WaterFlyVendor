@@ -12,3 +12,5 @@ data class VendorDetailResponse(val status: Int, val message: List<String>?, val
 data class VendorStatusResponse(val status: Int, val message: List<String>?, val data: List<Any?>?)
 
 data class VendorLiveLocationResponse(val status: Int, val message: List<String>?, val data: List<Any?>?)
+
+data class CheckVendorStatusResponse(val status: Int, val message: List<String>?, val data: List<Any?>?)

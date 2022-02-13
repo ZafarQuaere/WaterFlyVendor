@@ -23,4 +23,7 @@ interface API {
     @POST("Waterfly/api/vendors/update_vendor_location.php")
     suspend fun vendorLiveLocation(@Body body: RequestBodies.VendorLiveLocationBody): Response<VendorLiveLocationResponse>
 
+    @POST("Waterfly/api/vendors/get_vendor_live_status.php")
+    suspend fun getVendorLiveStatus(@Body body: RequestBodies.GetVendorStatusBody): Response<CheckVendorStatusResponse>
+
 }
