@@ -18,7 +18,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:text="Welcome Mr Peter Parker"/>
+            tools:text="Welcome Mr Peter Parker"/>
 
     </androidx.cardview.widget.CardView>
 
@@ -27,8 +27,6 @@
         android:layout_marginTop="@dimen/_5sdp"
         android:background="@drawable/online"
         android:layout_height="wrap_content"/>
-
-
 
 
     <ProgressBar
@@ -41,16 +39,6 @@
 
 
 
-        <com.waterfly.vendor.toggle.LabeledSwitch
-            android:layout_alignParentBottom="true"
-            android:layout_marginVertical="@dimen/_10sdp"
-            android:layout_marginHorizontal="@dimen/_10sdp"
-            android:id="@+id/toggle1"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:checked="true"
-            android:textOff="@string/offline"
-            android:textOn="@string/online"/>
 
 
 </LinearLayout>

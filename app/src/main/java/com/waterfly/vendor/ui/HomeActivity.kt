@@ -19,7 +19,6 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.asLiveData
-import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
 import com.google.android.gms.maps.*
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
@@ -35,10 +34,6 @@ import com.waterfly.vendor.viewmodel.HomeViewModel
 import com.waterfly.vendor.viewmodel.ViewModelProviderFactory
 import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.on_off_toggle.*
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.withContext
 
 //TODO 1 Ask location permission
 //TODO 2 Check GPS Enable
@@ -65,13 +60,11 @@ class HomeActivity : AppCompatActivity()/*, OnMapReadyCallback*/ {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-//        window.requestFeature(WindowCompat.FEATURE_ACTION_BAR_OVERLAY);
         setContentView(R.layout.activity_home)
         initMap()
         initUI()
         dataStoreManager = DataStoreManager(this)
         observeData()
-//        getVendorLiveStatus()
         supportActionBar?.setBackgroundDrawable(ColorDrawable(ContextCompat.getColor(this, R.color.md_blue_500)))
     }
 
@@ -206,21 +199,29 @@ class HomeActivity : AppCompatActivity()/*, OnMapReadyCallback*/ {
         homeViewModel = ViewModelProvider(this, factory)[HomeViewModel::class.java]
         Glide.with(this).load(R.drawable.offline).into(imgBg)
         cardOffline.setOnClickListener {
-            vendorLiveStatus(true)
+            if (isGPSEnabled) {
+                vendorLiveStatus(true)
+            } else {
+                Utils.showGPSAlert(this@HomeActivity)
+            }
         }
 
         cardOnline.setOnClickListener {
             vendorLiveStatus(false)
         }
+
+        imgBtnShare.setOnClickListener {
+            Utils.shareApplication(this@HomeActivity)
+        }
     }
 
-    private fun stopLocationService() {
+    public fun stopLocationService() {
         LocationService.isServiceStarted = false
         LogUtils.error("$TAG LocationService Stopped ### ")
         stopService(Intent(this, LocationService::class.java))
     }
 
-    private fun vendorLiveStatus(isOnline: Boolean) {
+    public fun vendorLiveStatus(isOnline: Boolean) {
         val action = if (isOnline) "set_online" else "set_offline"
         vendorLiveStatus = isOnline
         val body = RequestBodies.VendorStatusBody(token,action,vendorId,mLocation.latitude.toString(),mLocation.longitude.toString())
@@ -296,11 +297,31 @@ class HomeActivity : AppCompatActivity()/*, OnMapReadyCallback*/ {
             mLocation.longitude = 0.0
             mLocation.longitude = 0.0
         }
+
         override fun onLocationChanged(location: Location) {
             mLocation = location
             LogUtils.error("$TAG Location Change:VendorLocationListener ### ${location.latitude}  ${location.longitude}")
             if (vendorLiveStatus)
                 callLiveLocationApi(location)
+        }
+
+        override fun onProviderDisabled(provider: String) {
+            //GPS is disable ask him to enable GPS
+            isGPSEnabled = false
+            if (vendorLiveStatus){
+                Utils.showGPSAlert(this@HomeActivity)
+            }
+        }
+
+        override fun onProviderEnabled(provider: String) {
+            isGPSEnabled = true
+            val myLocation = VendorLocationListener()
+            val locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, Constants.MIN_TIME_BW_UPDATES, Constants.MIN_DISTANCE_CHANGE_FOR_UPDATES, myLocation)
+        }
+
+        override fun onStatusChanged(provider: String?, status: Int, extras: Bundle?) {
+            super.onStatusChanged(provider, status, extras)
         }
     }
 

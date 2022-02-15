@@ -15,7 +15,7 @@
     <string name="enter_correct_otp">Please enter correct OTP</string>
     <string name="please_enter_details">Please Enter Details</string>
     <string name="vendor_name">Vendor Name</string>
-    <string name="plant_name">Plant Name</string>
+    <string name="plant_name">Delivery Area</string>
     <string name="plant_phone">Plant Phone</string>
     <string name="plant_address">Plant Address</string>
     <string name="add_details">Add Details</string>
