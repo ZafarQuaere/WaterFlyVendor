@@ -46,7 +46,7 @@ import kotlinx.coroutines.withContext
 //TODO 4 show enable disable option
 //TODO 5 update UI on the basis of offline/online feature
 
-class HomeActivity : AppCompatActivity(), OnMapReadyCallback {
+class HomeActivity : AppCompatActivity()/*, OnMapReadyCallback*/ {
 
     lateinit var homeViewModel: HomeViewModel
     lateinit var dataStoreManager: DataStoreManager
@@ -81,9 +81,9 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private fun initMap() {
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
-        val mapFragment = supportFragmentManager
+       /* val mapFragment = supportFragmentManager
             .findFragmentById(R.id.mapFrag) as SupportMapFragment
-        mapFragment.getMapAsync(this)
+        mapFragment.getMapAsync(this)*/
 //        locationPermission()
         if (!checkPermission()) {
             requestPermission()
@@ -140,26 +140,26 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback {
             //requesting location update through GPS provider
             locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, Constants.MIN_TIME_BW_UPDATES, Constants.MIN_DISTANCE_CHANGE_FOR_UPDATES, myLocation)
         }
-        val locationThread = LocationThread()
-        locationThread.start()
+        /*val locationThread = LocationThread()
+        locationThread.start()*/
     }
 
     private fun observeData() {
-              dataStoreManager.getToken.asLiveData().observe(this@HomeActivity, Observer {
-                  token = it
-                  token?.let { it1 -> homeViewModel.updateStoredData(it1) }
-                  LogUtils.DEBUG("getToken :time: ${System.currentTimeMillis()}  : $vendorId : $token")
-              })
-                dataStoreManager.getVendorId.asLiveData().observe(this@HomeActivity, Observer {
-                    vendorId = it
-                    vendorId?.let { it1 -> homeViewModel.updateStoredData(it1) }
-                    LogUtils.DEBUG("getVendorId :time: ${System.currentTimeMillis()}  : $vendorId : $token")
-                })
+        dataStoreManager.getToken.asLiveData().observe(this@HomeActivity, Observer {
+            token = it
+            token?.let { it1 -> homeViewModel.updateStoredData(it1) }
+            LogUtils.DEBUG("getToken :time: ${System.currentTimeMillis()}  : $vendorId : $token")
+        })
+        dataStoreManager.getVendorId.asLiveData().observe(this@HomeActivity, Observer {
+            vendorId = it
+            vendorId?.let { it1 -> homeViewModel.updateStoredData(it1) }
+            LogUtils.DEBUG("getVendorId :time: ${System.currentTimeMillis()}  : $vendorId : $token")
+        })
 
-            dataStoreManager.getVendorData().asLiveData().observe(this, Observer {
-                LogUtils.DEBUG("Vendor name: ${it.vendor_name}")
-                textVendorName.text = "Welcome ${it.vendor_name}"
-            })
+        dataStoreManager.getVendorName.asLiveData().observe(this, Observer {
+            LogUtils.DEBUG("Vendor name: $it")
+            textVendorName.text = "Welcome $it"
+        })
         homeViewModel.dataStoreValue.observe(this, Observer {
             println("dataStoreValue :time: ${System.currentTimeMillis()}  : $vendorId : $token")
             getVendorLiveStatus()
@@ -205,7 +205,6 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback {
         val factory = ViewModelProviderFactory(application, repository)
         homeViewModel = ViewModelProvider(this, factory)[HomeViewModel::class.java]
         Glide.with(this).load(R.drawable.offline).into(imgBg)
-
         cardOffline.setOnClickListener {
             vendorLiveStatus(true)
         }
@@ -213,11 +212,6 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback {
         cardOnline.setOnClickListener {
             vendorLiveStatus(false)
         }
-        /*runBlocking {
-            delay(1000)
-
-        }*/
-
     }
 
     private fun stopLocationService() {
@@ -262,12 +256,14 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback {
     private fun updateSwitch() {
         if (vendorLiveStatus) {
             startLocationService()
-            imgBg.visibility = View.GONE
+            Glide.with(this).load(R.drawable.online).into(imgBg)
+//            imgBg.visibility = View.GONE
             cardOffline.visibility = View.GONE
             cardOnline.visibility = View.VISIBLE
         } else {
             stopLocationService()
-            imgBg.visibility = View.VISIBLE
+            Glide.with(this).load(R.drawable.offline).into(imgBg)
+//            imgBg.visibility = View.VISIBLE
             cardOffline.visibility = View.VISIBLE
             cardOnline.visibility = View.GONE
         }
@@ -281,7 +277,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback {
         progress.visibility = View.VISIBLE
     }
 
-    override fun onMapReady(googleMap: GoogleMap) {
+     fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
         mMap.isIndoorEnabled = true
         val uiSettings: UiSettings = mMap.uiSettings

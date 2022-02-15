@@ -62,6 +62,12 @@ class DataStoreManager(val context: Context) {
         }
     }
 
+    suspend fun storeVendorName(id: String) {
+        context.dataStore.edit {
+            it[vendor_name] = id
+        }
+    }
+
     suspend fun storeToken(token: String) {
         context.dataStore.edit {
             it[JWT_TOKEN] = token
@@ -88,5 +94,10 @@ class DataStoreManager(val context: Context) {
     val getVendorId: Flow<String?>
         get() = context.dataStore.data.map { preferences ->
             preferences[VENDOR_ID]
+        }
+
+    val getVendorName: Flow<String?>
+        get() = context.dataStore.data.map { preferences ->
+            preferences[vendor_name]
         }
 }

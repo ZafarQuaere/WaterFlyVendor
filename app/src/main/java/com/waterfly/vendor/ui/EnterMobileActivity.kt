@@ -158,6 +158,7 @@ class EnterMobileActivity : AppCompatActivity() {
     private suspend fun navigateToDetailsScreen(vendorData: ValidateUserData) {
         dataStoreManager.storeToken(vendorData.JWT_Token)
         dataStoreManager.storeVendorId(vendorData.id)
+        dataStoreManager.storeVendorName(vendorData.vendor_name)
         startActivity(Intent(this@EnterMobileActivity,VendorDetailsActivity::class.java))
     }
 

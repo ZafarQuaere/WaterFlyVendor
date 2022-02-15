@@ -6,6 +6,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:clickable="true"
+    android:background="@color/md_blue_500"
     tools:context=".ui.HomeActivity"
     android:focusable="true">
 
@@ -50,18 +51,19 @@
             app:liteMode="true" />
     </androidx.cardview.widget.CardView>-->
 
-    <fragment
+   <!-- <fragment
         android:id="@+id/mapFrag"
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:liteMode="true" />
+        app:liteMode="true" />-->
 
     <ImageView
         android:id="@+id/imgBg"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scaleType="fitXY"
+        android:layout_below="@+id/cardTitleName"
+        android:scaleType="fitCenter"
         android:visibility="visible" />
 
     <ProgressBar
