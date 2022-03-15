@@ -19,7 +19,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/please_enter_your_mobile_number"
+        android:text="@string/please_enter_otp"
         android:textSize="@dimen/_12sdp"/>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -31,7 +31,7 @@
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/edit_mobile_no"
+            android:id="@+id/editMobileNo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="phone"
@@ -42,15 +42,33 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
-
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btnSendOTP"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tilOTP"
         android:visibility="visible"
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:hint="@string/enter_otp"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editEnterOTP"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:maxLength="6"
+            android:singleLine="true"
+            android:text=""/>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.button.MaterialButton
+        android:visibility="visible"
+        android:id="@+id/btnValidateOTP"
+        android:layout_width="match_parent"
         android:layout_height="@dimen/_50sdp"
-        android:text="@string/send_otp"
-        android:onClick="onSendOTPClick"
+        android:text="@string/validate"
+        android:onClick="onValidateClick"
         android:layout_marginTop="@dimen/_8sdp"/>
 
 

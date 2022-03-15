@@ -8,6 +8,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.lifecycleScope
+import com.google.android.exoplayer2.upstream.DataSource
 import com.google.android.material.snackbar.Snackbar
 import com.waterfly.vendor.R
 import com.waterfly.vendor.model.VendorDetailResponse
@@ -19,6 +20,8 @@ import com.waterfly.vendor.viewmodel.ViewModelProviderFactory
 import kotlinx.android.synthetic.main.activity_vendor_details.*
 import kotlinx.android.synthetic.main.activity_vendor_details.progress
 import kotlinx.coroutines.launch
+import com.google.android.exoplayer2.upstream.HttpDataSource
+
 
 class VendorDetailsActivity : AppCompatActivity() {
     lateinit var vendorViewModel: VendorDetailsViewModel
@@ -122,4 +125,5 @@ class VendorDetailsActivity : AppCompatActivity() {
     private fun showProgressBar() {
         progress.visibility = View.VISIBLE
     }
+
 }

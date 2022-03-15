@@ -200,14 +200,14 @@ class HomeActivity : AppCompatActivity()/*, OnMapReadyCallback*/ {
         Glide.with(this).load(R.drawable.offline).into(imgBg)
         cardOffline.setOnClickListener {
             if (isGPSEnabled) {
-                vendorLiveStatus(true)
+                updateVendorLiveStatus(true)
             } else {
                 Utils.showGPSAlert(this@HomeActivity)
             }
         }
 
         cardOnline.setOnClickListener {
-            vendorLiveStatus(false)
+            updateVendorLiveStatus(false)
         }
 
         imgBtnShare.setOnClickListener {
@@ -221,7 +221,7 @@ class HomeActivity : AppCompatActivity()/*, OnMapReadyCallback*/ {
         stopService(Intent(this, LocationService::class.java))
     }
 
-    public fun vendorLiveStatus(isOnline: Boolean) {
+    public fun updateVendorLiveStatus(isOnline: Boolean) {
         val action = if (isOnline) "set_online" else "set_offline"
         vendorLiveStatus = isOnline
         val body = RequestBodies.VendorStatusBody(token,action,vendorId,mLocation.latitude.toString(),mLocation.longitude.toString())
@@ -236,7 +236,8 @@ class HomeActivity : AppCompatActivity()/*, OnMapReadyCallback*/ {
                             if(response.data.status == 1) {
                                 updateSwitch()
                             } else {
-                                LogUtils.showToast(this, response.data.message?.get(0))
+//                                LogUtils.showToast(this, response.data.message?.get(0))
+                                LogUtils.DEBUG(response.data.message?.get(0).toString())
                              }
                         }
                     }
@@ -411,14 +412,14 @@ class HomeActivity : AppCompatActivity()/*, OnMapReadyCallback*/ {
 
     override fun onDetachedFromWindow() {
         stopLocationService()
-        vendorLiveStatus(false)
+        updateVendorLiveStatus(false)
         LogUtils.error("$TAG onDetachedFromWindow Called :: ")
         super.onDetachedFromWindow()
     }
 
     override fun onDestroy() {
         stopLocationService()
-        vendorLiveStatus(false)
+        updateVendorLiveStatus(false)
         LogUtils.error("$TAG onDestroy Called :: ")
         super.onDestroy()
     }

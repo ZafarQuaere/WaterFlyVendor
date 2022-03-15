@@ -10,7 +10,6 @@ import android.os.Build
 import android.provider.Settings
 import com.waterfly.vendor.app.MyApplication
 import com.waterfly.vendor.ui.HomeActivity
-import androidx.core.content.ContextCompat.startActivity
 import com.waterfly.vendor.BuildConfig
 
 
@@ -78,7 +77,7 @@ object Utils {
         // on pressing cancel button
         alertDialog.setNegativeButton("Close App") { dialog, which ->
             (mContext as HomeActivity).stopLocationService()
-            (mContext as HomeActivity).vendorLiveStatus(false)
+            (mContext as HomeActivity).updateVendorLiveStatus(false)
             dialog.cancel()
             mContext.finish()
         }
