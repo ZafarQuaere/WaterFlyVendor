@@ -322,6 +322,7 @@ class HomeActivity : AppCompatActivity()/*, OnMapReadyCallback*/ {
         }
 
         override fun onStatusChanged(provider: String?, status: Int, extras: Bundle?) {
+            LogUtils.DEBUG("$TAG  provider: $provider status: $status")
             super.onStatusChanged(provider, status, extras)
         }
     }
