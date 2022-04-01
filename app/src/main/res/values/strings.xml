@@ -33,6 +33,12 @@
     <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">
          AIzaSyBulyTj2UyG7tnyG_5xf4DGk70o08hEC1c
     </string>
+    <string name="downloadText">Download the Vendor App from</string>
+
+    <string name="ok">Ok</string>
+    <string name="cancel">Cancel</string>
+    <string name="are_you_ready_for_service_msg">Are you ready for delivery ?\n User will connect with you. </string>
+    <string name="you_will_be_offline_and_user_will_not_be_able_to_connect_you">You will be offline and user will not be able to connect you.</string>
 
     <!--<string name="google_maps_key">AIzaSyDVDloatevH6ZB2dNqorDljbt1rGlDVpoQ</string>-->
     <!--<string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">

@@ -14,4 +14,10 @@
     <color name="white">#FFFFFFFF</color>
 
     <color name="background">#2196F3</color>
+
+    <!-- Dialog single button colors -->
+    <color name="dialog_text_color">#000000</color>
+    <color name="dialog_bg_color">#f1f1f1</color>
+    <color name="dialog_separator_color">@color/background</color>
+    <color name="dialog_btn_text_color">@color/background</color>
 </resources>

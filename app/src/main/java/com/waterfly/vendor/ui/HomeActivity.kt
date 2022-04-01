@@ -29,6 +29,7 @@ import com.waterfly.vendor.R
 import com.waterfly.vendor.bgtask.LocationService
 import com.waterfly.vendor.network.RequestBodies
 import com.waterfly.vendor.repository.AppRepository
+import com.waterfly.vendor.ui.interfaces.DialogOkCancelListener
 import com.waterfly.vendor.util.*
 import com.waterfly.vendor.viewmodel.HomeViewModel
 import com.waterfly.vendor.viewmodel.ViewModelProviderFactory
@@ -200,14 +201,32 @@ class HomeActivity : AppCompatActivity()/*, OnMapReadyCallback*/ {
         Glide.with(this).load(R.drawable.offline).into(imgBg)
         cardOffline.setOnClickListener {
             if (isGPSEnabled) {
-                updateVendorLiveStatus(true)
+                DialogUtil.showDialogDoubleButton(this,getString(R.string.cancel),getString(R.string.ok),getString(R.string.are_you_ready_for_service_msg),object: DialogOkCancelListener{
+                    override fun onOkClick() {
+                        updateVendorLiveStatus(true)
+                    }
+                    override fun onCancelClick() {
+                        //Implementation will be done if required
+                    }
+                })
             } else {
                 Utils.showGPSAlert(this@HomeActivity)
             }
         }
 
         cardOnline.setOnClickListener {
-            updateVendorLiveStatus(false)
+            DialogUtil.showDialogDoubleButton(this,
+                getString(R.string.cancel),
+                getString(R.string.ok),
+                getString(R.string.you_will_be_offline_and_user_will_not_be_able_to_connect_you),
+                object : DialogOkCancelListener {
+                    override fun onOkClick() {
+                        updateVendorLiveStatus(false)
+                    }
+                    override fun onCancelClick() {
+                        //Implementation will be done if required
+                    }
+                })
         }
 
         imgBtnShare.setOnClickListener {

@@ -10,6 +10,6 @@ object Constants{
          const val MIN_TIME_BW_UPDATES = (1000 * 5 * 1 ).toLong()// 15 second
 
         // The minimum distance to change Updates in meters
-         const val MIN_DISTANCE_CHANGE_FOR_UPDATES: Float = 5f // 5 meters
+         const val MIN_DISTANCE_CHANGE_FOR_UPDATES: Float = 3f // 5 meters
 
 }

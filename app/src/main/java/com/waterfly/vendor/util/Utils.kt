@@ -11,6 +11,7 @@ import android.provider.Settings
 import com.waterfly.vendor.app.MyApplication
 import com.waterfly.vendor.ui.HomeActivity
 import com.waterfly.vendor.BuildConfig
+import com.waterfly.vendor.R
 
 
 object Utils {
@@ -87,10 +88,11 @@ object Utils {
 
     fun shareApplication(activity: HomeActivity) {
         val sendIntent = Intent()
+        val downloadText = activity.getString(R.string.downloadText);
         sendIntent.action = Intent.ACTION_SEND
         sendIntent.putExtra(
             Intent.EXTRA_TEXT,
-            "Hey check out my app at: https://play.google.com/store/apps/details?id=" + BuildConfig.APPLICATION_ID
+            downloadText+" https://play.google.com/store/apps/details?id=" + BuildConfig.APPLICATION_ID
         )
         sendIntent.type = "text/plain"
         activity.startActivity(sendIntent)
