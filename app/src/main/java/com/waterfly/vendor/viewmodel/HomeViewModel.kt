@@ -2,6 +2,7 @@ package com.waterfly.vendor.viewmodel
 
 import android.app.Application
 import android.text.TextUtils
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -13,6 +14,7 @@ import com.waterfly.vendor.model.VendorStatusResponse
 import com.waterfly.vendor.network.RequestBodies
 import com.waterfly.vendor.repository.AppRepository
 import com.waterfly.vendor.util.Event
+import com.waterfly.vendor.util.LogUtils
 import com.waterfly.vendor.util.Resource
 import com.waterfly.vendor.util.Utils
 import kotlinx.coroutines.launch
@@ -55,8 +57,10 @@ class HomeViewModel(app: Application, private val appRepository: AppRepository) 
                 ))))
             }
         } catch (t: Throwable) {
+            LogUtils.error("Error  ${t.localizedMessage}")
             when (t) {
                 is IOException -> {
+                    LogUtils.DEBUG("Error  ${t.message}")
                     _vendorStatusResponse.postValue(Event(Resource.Error(getApplication<MyApplication>().getString(
                         R.string.network_failure
                     ))))
@@ -68,6 +72,7 @@ class HomeViewModel(app: Application, private val appRepository: AppRepository) 
             }
         }
     }
+
 
     private suspend fun checkVendorLiveStatus(body: RequestBodies.GetVendorStatusBody) {
         _checkVendorStatusResponse.postValue(Event(Resource.Loading()))

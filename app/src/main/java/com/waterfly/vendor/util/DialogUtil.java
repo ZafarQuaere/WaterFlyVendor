@@ -127,6 +127,7 @@ public class DialogUtil {
                 listener.okClick();
             }
         });
+        dialog.setCanceledOnTouchOutside(false);
         dialog.show();
     }
 }

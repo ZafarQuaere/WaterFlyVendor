@@ -2,6 +2,7 @@ package com.waterfly.vendor.bgtask
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.app.PendingIntent
 import android.app.Service
 import android.content.Intent
 import android.location.Location
@@ -20,14 +21,22 @@ import java.util.*
 class LocationService : Service() {
     private val NOTIFICATION_CHANNEL_ID = "my_notification_location"
     private val TAG = "LocationService"
+
     override fun onCreate() {
         super.onCreate()
         LogUtils.error("$TAG LocationService started ### ")
         isServiceStarted = true
+        val notifIntent = Intent(this, HomeActivity::class.java)
+        val pendingIntent = PendingIntent.getActivity(this,0,notifIntent,0)
+
         val builder: NotificationCompat.Builder =
             NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_ID)
                 .setOngoing(false)
-                .setSmallIcon(R.drawable.ic_launcher_background)
+                .setContentTitle(applicationContext.getText(R.string.app_name))
+                .setContentText(applicationContext.getText(R.string.bg_notif_message))
+                .setSmallIcon(R.mipmap.ic_launcher_foreground)
+                .setContentIntent(pendingIntent)
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val notificationManager: NotificationManager =
                 getSystemService(NOTIFICATION_SERVICE) as NotificationManager
@@ -38,6 +47,7 @@ class LocationService : Service() {
             notificationChannel.description = NOTIFICATION_CHANNEL_ID
             notificationChannel.setSound(null, null)
             notificationManager.createNotificationChannel(notificationChannel)
+
             startForeground(1, builder.build())
         }
     }

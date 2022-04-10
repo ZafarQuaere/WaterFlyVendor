@@ -28,6 +28,7 @@ class VendorDetailsActivity : AppCompatActivity() {
     lateinit var dataStoreManager: DataStoreManager
     private var token:String? = null
     private var vendorId:String? = null
+    private var vendorName:String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,7 +55,7 @@ class VendorDetailsActivity : AppCompatActivity() {
     }
 
     fun addDetails(view: View) {
-        val vendorName = editVendorName.text.toString()
+        vendorName = editVendorName.text.toString()
         val plantName = editPlantName.text.toString()
         val pincode = editVPincode.text.toString()
         val vendorAddress = editVendorAddress.text.toString()
@@ -63,11 +64,11 @@ class VendorDetailsActivity : AppCompatActivity() {
     }
 
     private fun validateInput(
-        vendorName: String, plantName: String,
+        vendorName: String?, plantName: String,
         pincode: String, address: String
     ) {
 
-        if (vendorName.isEmpty() || vendorName.length < 3) {
+        if (vendorName?.isEmpty() == true || vendorName?.length!! < 3) {
             progress.errorSnack(getString(R.string.enter_valid_vendor_name), Snackbar.LENGTH_LONG)
         } else if (address.isEmpty() || address.length < 3) {
             progress.errorSnack(getString(R.string.enter_valid_address), Snackbar.LENGTH_LONG)
@@ -110,6 +111,7 @@ class VendorDetailsActivity : AppCompatActivity() {
        if (data.status == 1){
            lifecycleScope.launch {
                dataStoreManager.setUserLogin(true)
+               vendorName?.let { dataStoreManager.storeVendorName(it) }
            }
            startActivity(Intent(this,HomeActivity::class.java))
            finish()

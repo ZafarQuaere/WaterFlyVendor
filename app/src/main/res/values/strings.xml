@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Water Fly Vendor</string>
     <string name="no_internet_connection">No internet connection</string>
-    <string name="network_failure">Network Failure</string>
+    <string name="network_failure">Network Failure! Please try after sometime.</string>
     <string name="conversion_error">Conversion Error</string>
     <string name="water_fly">Water Fly</string>
     <string name="please_enter_your_mobile_number">Please Enter your mobile number</string>
@@ -39,6 +39,10 @@
     <string name="cancel">Cancel</string>
     <string name="are_you_ready_for_service_msg">Are you ready for delivery ?\n User will connect with you. </string>
     <string name="you_will_be_offline_and_user_will_not_be_able_to_connect_you">You will be offline and user will not be able to connect you.</string>
+    <string name="dlg_bg_permission_title">Background location permission</string>
+    <string name="dlg_bg_permission_msg">Allow location permission to get location updates in background</string>
+    <string name="dlg_bg_permission_positive_btn">Allow</string>
+    <string name="bg_notif_message">Your location is shared  to users.</string>
 
     <!--<string name="google_maps_key">AIzaSyDVDloatevH6ZB2dNqorDljbt1rGlDVpoQ</string>-->
     <!--<string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">

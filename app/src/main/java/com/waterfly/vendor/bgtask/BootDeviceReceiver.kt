@@ -9,7 +9,7 @@ class BootDeviceReceivers : BroadcastReceiver() {
 
     override fun onReceive(context: Context?, intent: Intent?) {
         context?.let {
-            ContextCompat.startForegroundService(it, Intent(it, LocationService::class.java))
+//            ContextCompat.startForegroundService(it, Intent(it, LocationService::class.java))
         }
     }
 }

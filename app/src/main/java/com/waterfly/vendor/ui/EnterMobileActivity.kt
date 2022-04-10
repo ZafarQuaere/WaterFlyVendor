@@ -10,7 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.asLiveData
 import com.google.android.material.snackbar.Snackbar
 import com.waterfly.vendor.R
-import com.waterfly.vendor.bgtask.BGDemo
+import com.waterfly.vendor.practice.BGDemo
 import com.waterfly.vendor.network.RequestBodies
 import com.waterfly.vendor.repository.AppRepository
 import com.waterfly.vendor.util.*

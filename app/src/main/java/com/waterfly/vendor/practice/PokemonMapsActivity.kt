@@ -1,4 +1,4 @@
-package com.waterfly.vendor.bgtask
+package com.waterfly.vendor.practice
 
 import android.content.Context
 import android.content.pm.PackageManager

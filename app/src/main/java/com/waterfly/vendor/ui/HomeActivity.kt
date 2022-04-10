@@ -9,6 +9,7 @@ import android.location.Location
 import android.location.LocationListener
 import android.location.LocationManager
 import android.os.Build
+import android.os.Build.VERSION.SDK
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -30,6 +31,7 @@ import com.waterfly.vendor.bgtask.LocationService
 import com.waterfly.vendor.network.RequestBodies
 import com.waterfly.vendor.repository.AppRepository
 import com.waterfly.vendor.ui.interfaces.DialogOkCancelListener
+import com.waterfly.vendor.ui.interfaces.DialogSingleButtonListener
 import com.waterfly.vendor.util.*
 import com.waterfly.vendor.viewmodel.HomeViewModel
 import com.waterfly.vendor.viewmodel.ViewModelProviderFactory
@@ -70,7 +72,14 @@ class HomeActivity : AppCompatActivity()/*, OnMapReadyCallback*/ {
     }
 
     private fun startLocationService() {
+//        val intent = Intent(this, LocationService::class.java)
         ContextCompat.startForegroundService(this, Intent(this, LocationService::class.java))
+    }
+
+    public fun stopLocationService() {
+        LocationService.isServiceStarted = false
+        LogUtils.error("$TAG LocationService Stopped ### ")
+        stopService(Intent(this, LocationService::class.java))
     }
 
     private fun initMap() {
@@ -90,8 +99,11 @@ class HomeActivity : AppCompatActivity()/*, OnMapReadyCallback*/ {
     }
 
     private fun checkBgLocationPermission(): Boolean {
-        val result = ActivityCompat.checkSelfPermission(applicationContext, Manifest.permission.ACCESS_BACKGROUND_LOCATION)
-        return result == PackageManager.PERMISSION_GRANTED
+        return if (Build.VERSION.SDK_INT > Build.VERSION_CODES.M ) {
+            val result = ActivityCompat.checkSelfPermission(applicationContext, Manifest.permission.ACCESS_BACKGROUND_LOCATION)
+            result == PackageManager.PERMISSION_GRANTED
+        } else
+            true
     }
 
     private fun checkPermission(): Boolean {
@@ -107,18 +119,11 @@ class HomeActivity : AppCompatActivity()/*, OnMapReadyCallback*/ {
     @RequiresApi(Build.VERSION_CODES.M)
     private fun requestBgLocationPermission() {
         val backPermList = arrayOf(Manifest.permission.ACCESS_BACKGROUND_LOCATION)
-        AlertDialog.Builder(this)
-            .setTitle("Background location permission")
-            .setMessage("Allow location permission to get location updates in background")
-            .setPositiveButton("Allow") { _, _ ->
-                requestPermissions(backPermList, 2)
-            }
-            /*  .setNegativeButton("Cancel") { dialog, _ ->
-                  dialog.dismiss()
-              }*/
-            .create()
-            .show()
-//        dialog.setCanceledOnTouchOutside(false)
+        DialogUtil.showDialogSingleActionButton(
+            this,
+            getString(R.string.dlg_bg_permission_positive_btn),
+            getString(R.string.dlg_bg_permission_msg)
+        ) { requestPermissions(backPermList, 2) }
     }
 
     private fun getUserLocation() {
@@ -234,11 +239,6 @@ class HomeActivity : AppCompatActivity()/*, OnMapReadyCallback*/ {
         }
     }
 
-    public fun stopLocationService() {
-        LocationService.isServiceStarted = false
-        LogUtils.error("$TAG LocationService Stopped ### ")
-        stopService(Intent(this, LocationService::class.java))
-    }
 
     public fun updateVendorLiveStatus(isOnline: Boolean) {
         val action = if (isOnline) "set_online" else "set_offline"
@@ -254,7 +254,10 @@ class HomeActivity : AppCompatActivity()/*, OnMapReadyCallback*/ {
                             //Update UI
                             if(response.data.status == 1) {
                                 updateSwitch()
-                            } else {
+                            } else if (response.data.status == 0 && response.data.message?.get(0)?.contains("already Online") != false){
+                                updateSwitch()
+                            }
+                            else {
 //                                LogUtils.showToast(this, response.data.message?.get(0))
                                 LogUtils.DEBUG(response.data.message?.get(0).toString())
                              }
@@ -264,6 +267,7 @@ class HomeActivity : AppCompatActivity()/*, OnMapReadyCallback*/ {
                         hideProgressBar()
                         response.message?.let { message ->
                             progress.errorSnack(message, Snackbar.LENGTH_LONG)
+                            LogUtils.error(message)
                         }
                     }
                     is Resource.Loading -> {
