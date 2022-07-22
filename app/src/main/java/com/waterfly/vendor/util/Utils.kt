@@ -6,6 +6,7 @@ import android.content.Context
 import android.content.Intent
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
+import android.net.Uri
 import android.os.Build
 import android.provider.Settings
 import com.waterfly.vendor.app.MyApplication
@@ -98,4 +99,7 @@ object Utils {
         activity.startActivity(sendIntent)
     }
 
+    fun openWaterFlyApp(activity: Activity) {
+        activity.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=com.waterfly.users&hl=en")))
+    }
 }

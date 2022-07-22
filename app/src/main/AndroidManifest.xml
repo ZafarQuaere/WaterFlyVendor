@@ -22,6 +22,19 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication"
         android:usesCleartextTraffic="true">
+
+        <activity
+            android:name=".ui.SplashActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:exported="true"
+            android:label="@string/title_activity_splash"
+            android:theme="@style/Theme.MyApplication.Fullscreen">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".ui.EnterOTPActivity"
             android:exported="false" />
@@ -44,7 +57,12 @@
         <activity
             android:name=".ui.VendorDetailsActivity"
             android:exported="false" />
+
         <activity
+            android:name=".ui.EnterMobileActivity"
+            android:exported="false" />
+
+       <!-- <activity
             android:name=".ui.EnterMobileActivity"
             android:exported="true">
             <intent-filter>
@@ -52,7 +70,8 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
+        </activity>-->
+
         <activity android:name=".practice.PokemonMapsActivity" /> <!--  -->
         <receiver
             android:name=".bgtask.BootDeviceReceivers"

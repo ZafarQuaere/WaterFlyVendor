@@ -43,6 +43,10 @@
     <string name="dlg_bg_permission_msg">Allow location permission to get location updates in background</string>
     <string name="dlg_bg_permission_positive_btn">Allow</string>
     <string name="bg_notif_message">Your location is shared  to users.</string>
+    <string name="title_activity_splash">SplashActivity</string>
+    <string name="download_waterfly"><u><b>Download WaterFly App</b></u></string>
+    <string name="dummy_content">This App is only for Water Supplier or Vendor.\n\nPlease Download WaterFly App from link below.</string>
+    <string name="skip">Skip</string>
 
     <!--<string name="google_maps_key">AIzaSyDVDloatevH6ZB2dNqorDljbt1rGlDVpoQ</string>-->
     <!--<string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">
