@@ -72,7 +72,8 @@
             </intent-filter>
         </activity>-->
 
-        <activity android:name=".practice.PokemonMapsActivity" /> <!--  -->
+        <activity android:name=".practice.PokemonMapsActivity"
+            android:exported="false"/> <!--  -->
         <receiver
             android:name=".bgtask.BootDeviceReceivers"
             android:enabled="true"
@@ -85,13 +86,13 @@
         <service
             android:name=".bgtask.LocationService"
             android:enabled="true"
-            android:exported="true"
+            android:exported="false"
             android:process=":my_process" />
         <service
             android:name=".practice.BgLocationService"
             android:description="@string/servicedesc"
             android:enabled="true"
-            android:exported="true"
+            android:exported="false"
             tools:ignore="Instantiatable" />
     </application>
 

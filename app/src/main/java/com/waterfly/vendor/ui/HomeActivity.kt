@@ -17,6 +17,7 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.location.LocationListenerCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.asLiveData
@@ -315,7 +316,7 @@ class HomeActivity : AppCompatActivity()/*, OnMapReadyCallback*/ {
     }
 
 
-    inner class VendorLocationListener : LocationListener {
+    inner class VendorLocationListener : LocationListenerCompat {
         init {
             mLocation = Location("Start")
             mLocation.longitude = 0.0
@@ -344,7 +345,7 @@ class HomeActivity : AppCompatActivity()/*, OnMapReadyCallback*/ {
             locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, Constants.MIN_TIME_BW_UPDATES, Constants.MIN_DISTANCE_CHANGE_FOR_UPDATES, myLocation)
         }
 
-        override fun onStatusChanged(provider: String?, status: Int, extras: Bundle?) {
+        override fun onStatusChanged(provider: String, status: Int, extras: Bundle?) {
             LogUtils.DEBUG("$TAG  provider: $provider status: $status")
             super.onStatusChanged(provider, status, extras)
         }
